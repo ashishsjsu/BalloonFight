@@ -6,15 +6,20 @@ import greenfoot.*;
  * @author Ashish
  * @version 1.0
  */
-public class Hero extends Actor
+public class Hero extends Character
 {
     FloatBehaviour _floatBehaviour;
     Descend playerDescend;
+    String name;
+    String image;
     
-    public Hero(FloatBehaviour _floatBehaviour)
+    public Hero(FloatBehaviour _floatBehaviour,String name,String image)
     {
+        super(name,image);
         this._floatBehaviour = _floatBehaviour;
         this.playerDescend = new Descend();
+        this.name=name;
+        this.image=image;
     }
     
     public void setFloatBehaviour(FloatBehaviour _floatBehaviour)
