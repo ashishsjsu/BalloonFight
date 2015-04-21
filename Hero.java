@@ -25,7 +25,7 @@ public class Hero extends Actor
     public void act() 
     {
        checkKeys();
-       
+      System.out.println("Hero act...");
       Actor baseTerrain = getOneIntersectingObject(BaseTerrain.class);
       
        if(baseTerrain == null)
