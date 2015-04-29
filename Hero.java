@@ -3,125 +3,152 @@ import greenfoot.*;
 /**
  * This is class for main character in out game
  * 
- * @author Ashish
+ * @author Ashish Narkhede
  * @version 1.0
  */
 public class Hero extends Character
 {
-    FloatBehaviour _floatBehaviour;
-    Descend playerDescend;
-    String name;
-    String image;
+    GreenfootSound sound = new GreenfootSound("Theme_Song.mp3"); 
     
-    public Hero(FloatBehaviour _floatBehaviour,String name,String image)
-    {
-        super(name,image);
-        this._floatBehaviour = _floatBehaviour;
-        this.playerDescend = new Descend();
-        this.name=name;
-        this.image=image;
-    }
+    //String currFace = "right";
+   
+         public Hero(FloatBehaviour _floatBehaviour,String name, String image)
+        {
+            super(name, image);
+            this.playerDescend = new Descend();
+            this._floatBehaviour = _floatBehaviour;
+            //initialize character to default state
+            _currState = twoBState;
+            System.out.println(_currState.getClass().getName());
+        }
+        
     
-    public void setFloatBehaviour(FloatBehaviour _floatBehaviour)
+    public boolean detectHit()
     {
-        this._floatBehaviour = _floatBehaviour;
+       Actor enemyObj =  getOneObjectAtOffset(0, -30, Enemy.class);
+    
+       if(enemyObj != null)
+       {
+         move(15);
+         return true;
+       } 
+       
+       return false;
     }
     
     public void act() 
     {
-       checkKeys();
-       
-      Actor baseTerrain = getOneIntersectingObject(BaseTerrain.class);
-      
-       if(baseTerrain == null)
-       {
-           System.out.println(getY() + " " + getWorld().getHeight());
-            
-            if(!Greenfoot.isKeyDown("up"))
-            {
-               fallDown();
-            }
-       }
-       else
-       {
-           
-       }
-       /*
-        if(getY() < 580) 
-        {
-            System.out.println(getY() + " " + getWorld().getHeight());
-            
-            if(!Greenfoot.isKeyDown("up"))
-            {
-               fallDown();
-            }
-        }*/
-       checkBoundaries();
-    }
-    
-    public void checkBoundaries()
-    {
-       if(getX() <= 15)
-       { 
-           setLocation(15, getY()); 
-       }
-       if(getX() >= getWorld().getWidth()-15)
-       {
-           setLocation(getWorld().getWidth()-15, getY());
-       }
-       if(getY() <= 15)
-       {
-           setLocation(getX(), 15);
-       }       
-       if(getY() >= getWorld().getHeight()-15)
-       {
-           setLocation(getX(), getWorld().getHeight()-15);
-       }       
-    }
-    
-    public void fallDown()
-    {    
-         setFloatBehaviour(this.playerDescend);
-         String[] result = performFloat();
-         setLocation(getX() + Integer.parseInt(result[1]), getY() + Integer.parseInt(result[2]));
+     
+      if(_currState.getClass().getName() != "NoBalloonState")
+      {
+          checkKeys();
+          checkBoundaries();
           
-    }
+          if(detectHit())
+          {
+              //pass 1 to burst balloon to indicate hero's balloon state needs to be changed 
+              _currState.burstBalloon(1);
+              
+          }
+          
+          if(!onGround())
+          {
+              if(this._floatBehaviour != null)
+              {  
+                  this._floatBehaviour.resetSpeed();
+                  
+                  if(!Greenfoot.isKeyDown("up"))
+                  {
+                      fallDown();
+                  }                  
+              }
+          }
+          else
+          {
+              if(this._currState.getClass().getName() != "NoBalloonState")
+              {
+                  this._floatBehaviour.vSpeed = 0;
+              }
+          }
+      }        
+      else
+      {
+          this._currState.takeLife();
+      }
+   }
     
-    public String[] performFloat()
-    {
-         return _floatBehaviour.floatwithBalloon();
-    }
-        
-    public void invokeBehaviour(String[] behav)
-    {
-        setLocation(getX() + Integer.parseInt(behav[1]), getY() + Integer.parseInt(behav[2]));
-    }
-    
+   
     public void checkKeys()
     {   
+        
         if(Greenfoot.isKeyDown("left"))
         {
-            setFloatBehaviour(new FloatLeft());
-            setImage("bf100L.png");
-            String[] result = performFloat();
-            invokeBehaviour(result);
+            if(!aroundStageEdges())
+            {
+                currFace = "left";
+                setFloatBehaviour(new FloatLeft());
+                _currState.setImage(1);
+                //setImage("bf100L.png");
+                String[] result = performFloat(this._floatBehaviour);
+                invokeBehaviour(result);
+            }
         }
         
         if(Greenfoot.isKeyDown("right"))
         {
-            setFloatBehaviour(new FloatRight());
-            setImage("bf100R.png");
-            String[] result = performFloat();
-            invokeBehaviour(result);
+            if(!aroundStageEdges())
+            {
+                currFace = "right";
+                setFloatBehaviour(new FloatRight());
+                _currState.setImage(1);
+                //setImage("bf100R.png");
+                String[] result = performFloat(this._floatBehaviour);
+                invokeBehaviour(result);
+            }           
         }
         
         if(Greenfoot.isKeyDown("up"))
         {
-            setFloatBehaviour(new Ascend());
-            String[] result = performFloat();
-            invokeBehaviour(result);
+            if(!belowStage())
+            {
+                setFloatBehaviour(new Ascend());
+                String[] result = performFloat(this._floatBehaviour);
+                invokeBehaviour(result);
+           }
+           else
+           {
+               fallDown();
+           }
         }
         
-    }
+        
+        if(Greenfoot.isKeyDown("down"))
+        {
+            if(!belowStage())
+            {
+                setFloatBehaviour(new Descend());
+                this._floatBehaviour.vSpeed = 2;
+                String[] result = performFloat(this._floatBehaviour);
+                invokeBehaviour(result);
+           }
+           else
+           {
+               fallDown();
+           }
+        }
+        
+        if(Greenfoot.isKeyDown("p"))
+        {
+           if(sound.isPlaying())
+           {
+               sound.stop();
+           }
+           else
+           {
+               sound.play();
+           }
+        }
+    }//checkKeys
     
+        
 }

@@ -1,18 +1,19 @@
+
 /**
  * Write a description of class CharacterCreator here.
  * 
  * @author Jue Chemparathy 
  * @version 1.0
  */
-public abstract class CharacterCreator  
+public abstract class CharacterCreator
 {
     
         public enum CharacterType {
-        HeroLevel1,
-        HeroLevel2,
-        Monster1,
-        Monster2,
-        Monster3
+        Player1,
+        Player2,
+        Enemy1,
+        Enemy2,
+        Enemy3
     }
 
     public abstract Character getCharacter(CharacterType characterType);

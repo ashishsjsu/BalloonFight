@@ -8,18 +8,25 @@ import greenfoot.*;
  */
 public class FloatRight extends FloatBehaviour
 {
+  protected final int defaultSpeed = 3;
+  
   public FloatRight()
     {
-        System.out.println("In " + this.getClass().getName() + " constructor");
+        this.vSpeed = this.defaultSpeed;
     }
     
     public String[] floatwithBalloon()
     {
         String[] behav = new String[3];
         //more logic can be added to set new coordinates 
-        setNewCoordinates(1, 0);
+        setNewCoordinates(vSpeed, 0);
         String[] newBehavData = {"bfl00R.png", Integer.toString(getNewCoordinates()[0]), Integer.toString(getNewCoordinates()[1]) };
         
         return newBehavData;
     }   
+    
+    public void resetSpeed()
+    {
+        this.vSpeed = this.defaultSpeed;
+    }
 }

@@ -1,10 +1,16 @@
 #BlueJ class context
 comment0.params=
-comment0.target=java.lang.String[]\ floatwithBalloon()
-comment1.params=_x\ _y
-comment1.target=void\ setNewCoordinates(int,\ int)
-comment2.params=
-comment2.target=int[]\ getNewCoordinates()
+comment0.target=void\ resetSpeed()
+comment1.params=
+comment1.target=java.lang.String[]\ floatwithBalloon()
+comment2.params=_x\ _y
+comment2.target=void\ setNewCoordinates(int,\ int)
 comment3.params=
-comment3.target=void\ act()
-numComments=4
+comment3.target=int[]\ getNewCoordinates()
+comment4.params=speed
+comment4.target=void\ setVspeed(int)
+comment5.params=
+comment5.target=int\ getVspeed()
+comment6.params=
+comment6.target=void\ act()
+numComments=7

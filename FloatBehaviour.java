@@ -8,9 +8,11 @@ import greenfoot.*;
  */
 public abstract class FloatBehaviour extends Actor
 {
-    protected int velocity = 7;
+    public int vSpeed = 1;
     protected int _newX;
     protected int _newY;
+    
+    public abstract void resetSpeed();
     
     public abstract String[] floatwithBalloon();
     
@@ -24,6 +26,16 @@ public abstract class FloatBehaviour extends Actor
     {
         int[] coordinates = {_newX, _newY}; 
         return coordinates;
+    }
+    
+    public void setVspeed(int speed)
+    {
+        this.vSpeed = speed;
+    }
+    
+    public int getVspeed()
+    {
+        return this.vSpeed;
     }
     
     public void act() 

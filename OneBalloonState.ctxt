@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.params=hero
+comment0.target=OneBalloonState(Character)
+comment1.params=character
+comment1.target=void\ setImage(int)
+comment2.params=character
+comment2.target=void\ burstBalloon(int)
+comment3.params=
+comment3.target=void\ takeLife()
+numComments=4

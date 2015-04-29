@@ -12,13 +12,13 @@ public class HeroFactory  extends CharacterCreator
         Hero hero = null;
         String image=null;
         switch( heroType ) {
-            case HeroLevel1:
-                image = "bf100R1.png";
-                hero = new Hero( null,"Hero1",image);
-                break;
-            case HeroLevel2:
+            case Player1:
                 image = "bf100R.png";
-                hero = new Hero(null,"Hero2",image);
+                hero = new Hero( new Descend(),"Hero1",image);
+                break;
+            case Player2:
+                image = "bf100L.png";
+                hero = new Hero(new Descend(),"Hero2",image);
                 break;
         }
         return hero;

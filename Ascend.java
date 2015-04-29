@@ -8,12 +8,11 @@ import greenfoot.*;
  */
 public class Ascend extends FloatBehaviour
 {
-    int vspeed = 2;
-    private static int acc = 0; 
-    
-    public Ascend()
+   protected final int defaultAscendSpeed = 2;
+   
+   public Ascend()
     {
-        System.out.println("In " + this.getClass().getName() + " constructor");
+        this.vSpeed = this.defaultAscendSpeed;
     }
     
     public String[] floatwithBalloon()
@@ -21,9 +20,14 @@ public class Ascend extends FloatBehaviour
         String[] behav = new String[3];
         //here Y coordinate determines the speed with which the character falls
         //some logic should be added so that character falls with increasing speed
-        setNewCoordinates(0, -vspeed); 
+        setNewCoordinates(0, -this.vSpeed); 
         String[] newBehavData = {"", Integer.toString(getNewCoordinates()[0]), Integer.toString(getNewCoordinates()[1]) };
         
         return newBehavData;
+    }
+    
+    public void resetSpeed()
+    {
+        this.vSpeed = this.defaultAscendSpeed;
     }
 }
